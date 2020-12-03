@@ -27,3 +27,10 @@ in 'builder(first) stage' to /fxgame in this(second) stage.
 Result: as Expected.
 
 9)
+Expected:
+RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
+The command for running Windows/Mac OS/Linux application from Ubuntu container in the stage when completed image is running.
+Result: as Expected.
+
+
+
