@@ -1,1 +1,20 @@
+1)FROM gradle:jdk14 as builder
+2)COPY --chown=gradle:gradle . /home/gradle/fxgame
+3)WORKDIR /home/gradle/fxgame
+4)RUN gradle dist --no-daemon
+5)RUN unzip /home/gradle/fxgame/build/distributions/game2048-*.zip -d /tmp/fxgame
 
+7)FROM ubuntu:18.04
+8)COPY --from=builder /tmp/fxgame/image/ /fxgame
+9)RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/* 
+10)WORKDIR /fxgame
+11)CMD ./bin/fxgame
+
+
+
+7)
+Expected:
+FROM ubuntu:18.04.
+Before this second stage - the Gradle image with all the compiled classes from 'builder(first) stage' is discarded.
+Starts again from ubuntu:18.04 image.
+Result:
