@@ -10,6 +10,9 @@
 10)WORKDIR /fxgame
 11)CMD ./bin/fxgame
 
+The build image command is 'docker build -t fxgame_img .'
+The run image command is 'docker run -it --rm -e DISPLAY=host.docker.internal:0.0 fxgame_img'
+
 1)
 Expected:
 'FROM gradle:jdk14 as builder'. 
@@ -27,13 +30,15 @@ Result: as Expected:
 
 3)
 Expected:
-'WORKDIR /home/gradle/fxgame' - defines new default path /home/gradle/fxgame in the first FROM stage
+'WORKDIR /home/gradle/fxgame' - defines new default path /home/gradle/fxgame in the first(current) FROM stage
 Result: as Expected:
 
 4)
 Expected:
-'RUN gradle --no-daemon' command will generate zip archive in build\dist directory. 
+'RUN gradle dist --no-daemon' command will generate zip archive in build\dist directory. 
  Runs in the first FROM stage and performs Gradle build(compile) too.
+ The 'dist' task generates (depending on your OS) binaries for Windows, Mac or Linux,
+ with Java bundled in (using Java 14 jlink custom images).
  
  Result: Error:
   Task :jlink FAILED
