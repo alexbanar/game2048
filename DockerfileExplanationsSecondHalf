@@ -11,12 +11,11 @@
 11)CMD ./bin/fxgame
 
 
-
 7)
 Expected:
 FROM ubuntu:18.04.
 Before this second stage - the Gradle image with all the compiled classes from 'builder(first) stage' is discarded.
-Starts again from ubuntu:18.04 image.
+Starts again from ubuntu:18.04 image as base image on the second stage.
 Result: as Expected.
 
 8)
@@ -31,6 +30,35 @@ Expected:
 RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
 The command for running Windows/Mac OS/Linux application from Ubuntu container in the stage when completed image is running.
 Result: as Expected.
+Before the running of the completed image:
+On MacOS (Catalina) to download Xquartz (https://www.xquartz.org) & install it
+On Windows (10) to download and install VcXsrv Windows X Server from https://sourceforge.net/projects/vcxsrv/
+Two last things are for running our Ubuntu container on MacOS or Windows.
+The full details are in the article https://aboullaite.me/javafx-docker/
 
+10)
+Expected:
+WORKDIR /fxgame - - defines new default path /fxgame in the second(current) FROM stage
+Result: as Expected.
+
+11)
+CMD ./bin/fxgame
+Relative path ./bin/fxgame is eventually absolute path /fxgame/bin/fxgame
+because the default path in the second(current) FROM stage is /fxgame.
+So the command is 'CMD /fxgame/bin/fxgame' with the the absolute path.
+The generated ZIP file, in 'builder'(first) stage and 'RUN gradle dist --no-daemon' command,
+come with a binary that starts the game with the bundled optimized/trimmed JVM with only the needed modules.
+Expected:
+For this image running I have to comment command 'RUN gradle dist --no-daemon' 
+that creates error when image is builded.
+In the case as the command 'RUN gradle dist --no-daemon' was without creating image error,
+when image runs and we arrive to command 'CMD ./bin/fxgame', the command is expected to start the game.
+Result: 
+of running this command('CMD ./bin/fxgame') without command 'RUN gradle dist --no-daemon' from this Dockerfile
+during the run of the image is
+Error: 
+/bin/sh: 1: ./bin/fxgame: not found
+The build image command is 'docker build -t fxgame_img .'
+The run image command is 'docker run -it --rm -e DISPLAY=host.docker.internal:0.0 fxgame_img'
 
 
