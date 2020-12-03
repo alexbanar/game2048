@@ -17,16 +17,19 @@ The first FROM is named 'builder'. We can reference it in the following stage by
 The 'builder' stage is based on the Gradle Docker image for Java 14. 
 It contains both a Java 14 JDK and a Gradle installation.
 Real: as Expected:
+
 2)Expected:
 Coping to our project files including Java source code by 'COPY --chown=gradle:gradle . /home/gradle/fxgame',
 will copy our project to /home/gradle/fxgame directory inside the container to the directory /home/gradle/fxgame.
 Real: as Expected:
+
 3)Expected:
 'WORKDIR /home/gradle/fxgame' - defines new default path /home/gradle/fxgame in the first FROM stage
 Real: as Expected:
+
 4)Expected:
-RUN gradle --no-daemon command' command will generate zip archive in build\dist directory.
-'RUN gradle dist --no-daemon' run Gradle build(compile) 
+'RUN gradle --no-daemon' command will generate zip archive in build\dist directory. run Gradle build(compile)
+'RUN gradle dist --no-daemon'  
 
 with .
 
