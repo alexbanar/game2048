@@ -11,26 +11,27 @@
 11)CMD ./bin/fxgame
 
 1) Expected:
-'FROM gradle:jdk14 as builder' -  
+'FROM gradle:jdk14 as builder'. 
 There are two FROM lines in this Dockerfile. Each FROM defines a stage, and a stage can optionally have a name.
 The first FROM is named 'builder'. We can reference it in the following stage by this name.
 The 'builder' stage is based on the Gradle Docker image for Java 14. 
 It contains both a Java 14 JDK and a Gradle installation.
 Real: as Expected:
 2)Expected:
-Adding to our project files by 'COPY --chown=gradle:gradle . /home/gradle/fxgame',
-will copy our project to /home/gradle/fxgame directory into the container directory /home/gradle/fxgame.
+Coping to our project files including Java source code by 'COPY --chown=gradle:gradle . /home/gradle/fxgame',
+will copy our project to /home/gradle/fxgame directory inside the container to the directory /home/gradle/fxgame.
 Real: as Expected:
 3)Expected:
 'WORKDIR /home/gradle/fxgame' - defines new default path /home/gradle/fxgame in the first FROM stage
 Real: as Expected:
+4)Expected:
+RUN gradle --no-daemon command' command will generate zip archive in build\dist directory.
+'RUN gradle dist --no-daemon' run Gradle build(compile) 
 
-run Gradle build(compile) 
-
-with 'RUN gradle dist --no-daemon'.
+with .
 
 on which 'RUN gradle dist --no-daemon' command' runs in the first FROM stage.
-Expected: RUN gradle --no-daemon command' command will generate zip archive in build\dist directory.
+
 
 
 'RUN unzip /home/gradle/fxgame/build/distributions/game2048-*.zip -d /tmp/fxgame'
