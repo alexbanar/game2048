@@ -17,4 +17,13 @@ Expected:
 FROM ubuntu:18.04.
 Before this second stage - the Gradle image with all the compiled classes from 'builder(first) stage' is discarded.
 Starts again from ubuntu:18.04 image.
-Result:
+Result: as Expected.
+
+8)
+Expected:
+COPY --from=builder /tmp/fxgame/image/ /fxgame
+Copies only the files created before from /tmp/fxgame/image/ 
+in 'builder(first) stage' to /fxgame in this(second) stage.
+Result: as Expected.
+
+9)
