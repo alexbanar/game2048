@@ -1,19 +1,37 @@
-FROM gradle:jdk14 as builder
-COPY --chown=gradle:gradle . /home/gradle/fxgame
-WORKDIR /home/gradle/fxgame
-RUN gradle dist --no-daemon
-RUN unzip /home/gradle/fxgame/build/distributions/game2048-*.zip -d /tmp/fxgame
+1)FROM gradle:jdk14 as builder
+2)COPY --chown=gradle:gradle . /home/gradle/fxgame
+3)WORKDIR /home/gradle/fxgame
+4)RUN gradle dist --no-daemon
+5)RUN unzip /home/gradle/fxgame/build/distributions/game2048-*.zip -d /tmp/fxgame
 
-FROM ubuntu:18.04
-COPY --from=builder /tmp/fxgame/image/ /fxgame
-RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/* 
-WORKDIR /fxgame
-CMD ./bin/fxgame
+7)FROM ubuntu:18.04
+8)COPY --from=builder /tmp/fxgame/image/ /fxgame
+9)RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/* 
+10)WORKDIR /fxgame
+11)CMD ./bin/fxgame
 
-FROM gradle:jdk14 as builder -  
+1) Expected:
+'FROM gradle:jdk14 as builder' -  
 There are two FROM lines in this Dockerfile. Each FROM defines a stage, and a stage can optionally have a name.
-The first FROM is named 'builder'. We can reference it in the following stage.
+The first FROM is named 'builder'. We can reference it in the following stage by this name.
 The 'builder' stage is based on the Gradle Docker image for Java 14. 
 It contains both a Java 14 JDK and a Gradle installation.
-So, adding to our project files by COPY --chown=gradle:gradle . /home/gradle/fxgame,
-will run Gradle build with RUN gradle dist --no-daemon
+Real: as Expected:
+2)Expected:
+Adding to our project files by 'COPY --chown=gradle:gradle . /home/gradle/fxgame',
+will copy our project to /home/gradle/fxgame directory into the container directory /home/gradle/fxgame.
+Real: as Expected:
+3)Expected:
+'WORKDIR /home/gradle/fxgame' - defines new default path /home/gradle/fxgame in the first FROM stage
+Real: as Expected:
+
+run Gradle build(compile) 
+
+with 'RUN gradle dist --no-daemon'.
+
+on which 'RUN gradle dist --no-daemon' command' runs in the first FROM stage.
+Expected: RUN gradle --no-daemon command' command will generate zip archive in build\dist directory.
+
+
+'RUN unzip /home/gradle/fxgame/build/distributions/game2048-*.zip -d /tmp/fxgame'
+takes 
