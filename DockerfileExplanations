@@ -9,3 +9,11 @@ COPY --from=builder /tmp/fxgame/image/ /fxgame
 RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/* 
 WORKDIR /fxgame
 CMD ./bin/fxgame
+
+FROM gradle:jdk14 as builder -  
+There are two FROM lines in this Dockerfile. Each FROM defines a stage, and a stage can optionally have a name.
+The first FROM is named 'builder'. We can reference it in the following stage.
+The 'builder' stage is based on the Gradle Docker image for Java 14. 
+It contains both a Java 14 JDK and a Gradle installation.
+So, adding to our project files by COPY --chown=gradle:gradle . /home/gradle/fxgame,
+will run Gradle build with RUN gradle dist --no-daemon
