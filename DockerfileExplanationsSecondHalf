@@ -53,11 +53,9 @@ For this image running I have to comment command 'RUN gradle dist --no-daemon'
 that creates error when image is builded.
 In the case as the command 'RUN gradle dist --no-daemon' was without creating image error,
 when image runs and we arrive to command 'CMD ./bin/fxgame', the command is expected to start the game.
-Result: 
-of running this command('CMD ./bin/fxgame') without command 'RUN gradle dist --no-daemon' from this Dockerfile
-during the run of the image is
-Error: 
-/bin/sh: 1: ./bin/fxgame: not found
+Result: as Expected.
+
+_____________________________________________________________________________________
 The build image command is 'docker build -t fxgame_img .'
 The run image command is 'docker run -it --rm -e DISPLAY=host.docker.internal:0.0 fxgame_img'
 
