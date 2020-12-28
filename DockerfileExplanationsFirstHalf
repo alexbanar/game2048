@@ -40,64 +40,8 @@ Expected:
  The 'dist' task generates (depending on your OS) binaries for Windows, Mac or Linux,
  with Java bundled in (using Java 14 jlink custom images).
  
- Result: Error:
-  Task :jlink FAILED
-  Error: Error reading module: /home/gradle/fxgame/build/jlinkbase/jlinkjars/fxgame.jar
-  Execution failed for task ':jlink'.
-  Process 'command '/opt/java/openjdk/bin/jlink'' finished with non-zero exit value 1
-  
-  Details:
-  ERROR [builder 4/5] RUN gradle dist --no-daemon              53.2s
-------
- > [builder 4/5] RUN gradle dist --no-daemon:
-#10 1.205
-#10 1.205 Welcome to Gradle 6.7!
-#10 1.205
-#10 1.205 Here are the highlights of this release:
-#10 1.205  - File system watching is ready for production use
-#10 1.205  - Declare the version of Java your build requires
-#10 1.205  - Java 15 support
-#10 1.205
-#10 1.205 For more details see https://docs.gradle.org/6.7/release-notes.html
-#10 1.205
-#10 1.445 To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/6.7/userguide/gradle_daemon.html.
-#10 3.044 Daemon will be stopped at the end of the build stopping after processing
-#10 36.95
-#10 36.95 > Configure project :
-#10 36.97 Found module name 'fxgame'
-#10 38.15 deb
-#10 38.84 > Task :clean
-#10 48.84 > Task :compileJava
-#10 48.84 > Task :processResources
-#10 48.84 > Task :classes
-#10 48.95 > Task :jar
-#10 50.44 > Task :prepareMergedJarsDir
-#10 51.64 > Task :createMergedModule
-#10 51.65 > Task :createDelegatingModules
-#10 51.85 > Task :prepareModulesDir
-#10 52.44
-#10 52.45 > Task :jlink FAILED
-#10 52.45 Error: Error reading module: /home/gradle/fxgame/build/jlinkbase/jlinkjars/fxgame.jar
-#10 52.45
-#10 52.54
-#10 52.54 FAILURE: Build failed with an exception.
-#10 52.55
-#10 52.55 * What went wrong:
-#10 52.55 Execution failed for task ':jlink'.
-#10 52.55 > Process 'command '/opt/java/openjdk/bin/jlink'' finished with non-zero exit value 1
-#10 52.55
-#10 52.55 * Try:
-#10 52.55 Run with --stacktrace option to get the stack trace. 
-          Run with --info or --debug option to get more log output. Run with --scan to get full insights.
-#10 52.55
-#10 52.55 * Get more help at https://help.gradle.org
-#10 52.55
-#10 52.55 BUILD FAILED in 51s
-#10 52.55 9 actionable tasks: 9 executed
-------
-failed to solve with frontend dockerfile.v0: failed to build LLB:
-executor failed running [/bin/sh -c gradle dist --no-daemon]: runc did not terminate sucessfully
-
+ Result: as Expected:
+ 
 5)
 Expected:
 'RUN unzip /home/gradle/fxgame/build/distributions/game2048-*.zip -d /tmp/fxgame'.
